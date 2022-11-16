@@ -1,0 +1,24 @@
+{
+  "name": "multi-sig-contract-simple",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:vechain-energy/multi-sig-contract.git",
+  "author": "Mario Micklisch <mario@vechain.enegy>",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.1.1",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@vechain.energy/hardhat-thor": "^0.3.1",
+    "hardhat": "^2.10.2",
+    "hardhat-jest-plugin": "^0.0.6",
+    "nodemon": "^2.0.19",
+    "ora": "4",
+    "web3-eth-abi": "^1.7.5"
+  },
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "hardhat test:jest",
+    "test:watch": "nodemon -e sol --exec 'hardhat test:jest --watch'",
+    "deploy": "node scripts/deploy-contract.js"
+  }
+}
