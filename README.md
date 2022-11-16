@@ -8,13 +8,15 @@ A simple multi signature wallet that:
 1. supports contract interaction with and without sending VET
 
 
+The administration is embedded into Sync2 to support a smooth ecosystem expercience:  
+https://github.com/vechain/sync2/pull/278
+
 ## Confirmations
 
 1. Any **Owner** can submit a transaction
 1. A transaction can only be executed once the number of required owners have confirmed
 1. Owners can revoke previously given confirmations
 1. Any **Owner** can execute a transaction
-
 
 # Build & Deploy
 
@@ -28,7 +30,7 @@ yarn build
 yarn test
 ```
 
-## Deploy
+## Manual Deployments
 
 
 **cli: TestNet**
@@ -88,3 +90,10 @@ jq '.abi' ./artifacts/contracts/MultiSig.sol/MultiSigWallet.json -r
 * Add contract at: https://inspector.vecha.in/#/contracts
   * paste contract address
   * paste abi
+
+
+---
+
+_**Credits**_
+
+* The original contract is based on https://solidity-by-example.org/app/multi-sig-wallet
