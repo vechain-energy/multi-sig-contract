@@ -179,6 +179,12 @@ contract MultiSigWallet {
     }
 
     function addOwner(address owner) public onlySelf {
+        for (uint256 i = 0; i < owners.length; i++) {
+            if (owners[i] == owner) {
+                return;
+            }
+        }
+
         owners.push(owner);
         isOwner[owner] = true;
         emit AddOwner(owner);

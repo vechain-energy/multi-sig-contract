@@ -615,6 +615,25 @@ describe('MultiSigWallet', () => {
         expect(numConfirmationsRequired.toNumber()).toEqual(1)
       })
 
+      it('silently ignores if owner already exists', async () => {
+        const transaction = {
+          to: contracts.MultiSigWallet.address,
+          value: 0,
+          data: contracts.MultiSigWallet.interface.encodeFunctionData("addOwner", [users.user2.address])
+        }
+
+        const txIndex1 = await submitTransaction(transaction, users.owner)
+        await contracts.MultiSigWallet.confirmTransaction(txIndex1)
+        await contracts.MultiSigWallet.executeTransaction(txIndex1)
+
+        const txIndex2 = await submitTransaction(transaction, users.owner)
+        await contracts.MultiSigWallet.confirmTransaction(txIndex2)
+        await contracts.MultiSigWallet.executeTransaction(txIndex2)
+
+        const owners = await contracts.MultiSigWallet.getOwners()
+        await expect(owners).toEqual([users.owner.address, users.user2.address])
+      })
+
       it('emits AddOwner(owner)', async () => {
         const transaction = {
           to: contracts.MultiSigWallet.address,
@@ -778,6 +797,35 @@ describe('MultiSigWallet', () => {
 
         const { numConfirmations } = await contracts.MultiSigWallet.getTransaction(txIndex)
         expect(numConfirmations.toNumber()).toEqual(2)
+      })
+
+      it('silently ignores removal of last owner', async () => {
+        const transactionRemoveOwner = {
+          to: contracts.MultiSigWallet.address,
+          value: 0,
+          data: contracts.MultiSigWallet.interface.encodeFunctionData("removeOwner", [users.owner.address])
+        }
+
+        const txIndexRemoveOwner = await submitTransaction(transactionRemoveOwner, users.owner)
+        await contracts.MultiSigWallet.confirmTransaction(txIndexRemoveOwner)
+        await contracts.MultiSigWallet.executeTransaction(txIndexRemoveOwner)
+        const owners = await contracts.MultiSigWallet.getOwners()
+        await expect(owners).toEqual([users.owner.address])
+      })
+
+      it('silently ignores removal of unknown owners', async () => {
+        const transactionRemoveOwner = {
+          to: contracts.MultiSigWallet.address,
+          value: 0,
+          data: contracts.MultiSigWallet.interface.encodeFunctionData("removeOwner", [users.anon.address])
+        }
+
+        const txIndexRemoveOwner = await submitTransaction(transactionRemoveOwner, users.owner)
+        await contracts.MultiSigWallet.confirmTransaction(txIndexRemoveOwner)
+        await expect(contracts.MultiSigWallet.executeTransaction(txIndexRemoveOwner)).resolves.not.toThrow()
+
+        const owners = await contracts.MultiSigWallet.getOwners()
+        await expect(owners).toEqual([users.owner.address])
       })
 
       it('emits RemoveOwner(owner)', async () => {
