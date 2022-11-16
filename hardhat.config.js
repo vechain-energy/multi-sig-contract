@@ -9,6 +9,12 @@ module.exports = {
       url: 'https://testnet.veblocks.net',
       privateKey: "0x07b454982790bd33763e1d92a07b3c849adb2a1cfbbe44e3679f1d7e4988fe9f",
       delegateUrl: 'https://sponsor-testnet.vechain.energy/by/90'
+    },
+    main: {
+      url: 'https://mainnet.veblocks.net',
+      // @TODO: configure account and optionally delegator:
+      privateKey: '0x07b454982790bd33763e1d92a07b3c849adb2a1cfbbe44e3679f1d7e4988fe9f',
+      // delegateUrl: 'https://sponsor.vechain.energy/by/??'
     }
   }
 };
