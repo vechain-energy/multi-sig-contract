@@ -33,6 +33,11 @@ yarn test
 ## Manual Deployments
 
 
+**Sync2**
+
+* clone and build Sync2 with Multi-Signature-Wallet builtin: https://github.com/ifavo/sync2/tree/multisig
+* Add new Wallet and select type `Multi-Signature`
+
 **cli: TestNet**
 
 ```shell
